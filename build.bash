@@ -7,7 +7,7 @@ main() {
     local mcver vanillajar paperjar
     local paperclip_input_jars
 
-    if [[ -d Paper/ || -d Paperclip/ ]]; then
+    if [[ ! -d Paper/ || ! -d Paperclip/ ]]; then
         ensure_repositories
     fi
 
