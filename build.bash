@@ -49,7 +49,9 @@ main() {
     echo "vanillajar = ${vanillajar}"
     echo "mcver = ${mcver}"
 
-    mvn -Dpaperjar="$(realpath "${paperjar}")" -Dvanillajar="$(realpath "${vanillajar}")" -Dmcver="${mcver}" clean package || { >&2 echo "failed to build paperclip"; return 1; }
+    if [[ -z $1 || ! -e "assembly/target/paperclip-${mcver}.jar" ]]; then
+        mvn -Dpaperjar="$(realpath "${paperjar}")" -Dvanillajar="$(realpath "${vanillajar}")" -Dmcver="${mcver}" clean package || { >&2 echo "failed to build paperclip"; return 1; }
+    fi
     popd
 
     cp "Paperclip/assembly/target/paperclip-${mcver}.jar" server.jar
