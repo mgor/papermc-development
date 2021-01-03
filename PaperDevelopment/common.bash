@@ -32,8 +32,13 @@ Run
 EOF
     fi
 
-    git config --global user.email "${user_email}"
-    git config --global user.name "${user_name}"
+    if [[ -z "$(git config --global user.email)" ]]; then
+        git config --global user.email "${user_email}"
+    fi
+
+    if [[ -z "$(git config --global user.name)" ]]; then
+        git config --global user.name "${user_name}"
+    fi
 
     if [[ ! -d Paper/ ]]; then
         git clone https://github.com/PaperMC/Paper.git || return $?

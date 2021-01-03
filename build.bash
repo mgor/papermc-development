@@ -4,9 +4,13 @@
 . ./PaperDevelopment/common.bash
 
 main() {
-    ensure_repositories
-
+    local mcver vanillajar paperjar
     local paperclip_input_jars
+
+    if [[ -d Paper/ || -d Paperclip/ ]]; then
+        ensure_repositories
+    fi
+
     paperclip_input_jars="$(find Paperclip/ -maxdepth 1 -name '*.jar' | wc -l)"
 
     if (( paperclip_input_jars < 2 )); then
@@ -29,7 +33,8 @@ main() {
         find Paper/work/Minecraft/current -maxdepth 1 -follow -type f -name '*.jar' -and -not -name '*-*.jar' -exec cp {} Paperclip/ \;
     fi
 
-    local mcver vanillajar paperjar
+    fix_j2se_5_warn
+
     pushd Paperclip/
     for jar in *.jar; do
         if [[ "${jar}" == "paper-"*".jar" ]]; then
@@ -44,10 +49,10 @@ main() {
     echo "vanillajar = ${vanillajar}"
     echo "mcver = ${mcver}"
 
-    mvn -Dpaperjar="$(realpath "${paperjar}")" -Dvanillajar="$(realpath "${vanillajar}")" -Dmcver="${mcver}" clean package
+    mvn -Dpaperjar="$(realpath "${paperjar}")" -Dvanillajar="$(realpath "${vanillajar}")" -Dmcver="${mcver}" clean package || { >&2 echo "failed to build paperclip"; return 1; }
     popd
 
-    cp "assembly/target/paperclip-${mcver}.jar" server.jar
+    cp "Paperclip/assembly/target/paperclip-${mcver}.jar" server.jar
 
     return $?
 }
