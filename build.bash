@@ -11,6 +11,8 @@ main() {
         ensure_repositories
     fi
 
+    [[ -n $1 && $1 == "repo-init" ]] && return 0
+
     paperclip_input_jars="$(find Paperclip/ -maxdepth 1 -name '*.jar' | wc -l)"
 
     if (( paperclip_input_jars < 2 )); then
