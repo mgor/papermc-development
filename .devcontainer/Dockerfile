@@ -10,5 +10,6 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
         openjdk-11-jdk \
         openjdk-8-jdk \
         maven \
-        patch
+        patch \
+        shellcheck
 

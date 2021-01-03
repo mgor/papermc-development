@@ -1,15 +1,25 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2164
+
+pushd() {
+    command pushd "$1" &> /dev/null || exit 1
+}
+
+popd() {
+    command popd &> /dev/null || exit 1
+}
 
 main() {
-    local user_name="$(git config user.name)"
-    local user_email="$(git config user.email)"
+    local user_name user_email
+    user_name="$(git config user.name)"
+    user_email="$(git config user.email)"
 
-    if [[ -z "${user_name}" || -z "${user_email}" ]];
+    if [[ -z "${user_name}" || -z "${user_email}" ]]; then
         cat <<EOF
 Please tell me who you are.
 
 Run
- 
+
     git config user.email "you@example.com"
     git config user.name "Your Name"
 EOF
@@ -46,4 +56,3 @@ EOF
 
 main "$@"
 exit $?
-

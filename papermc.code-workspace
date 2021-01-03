@@ -5,7 +5,14 @@
 		},
 		{
 			"path": "./Paperclip"
-		}
+		},
+        {
+            "path": "./PaperDevelopment"
+        },
+        {
+            "name": "Devcontainer",
+            "path": "./.devcontainer"
+        }
 	],
 	"settings": {
 		"files.exclude": {
