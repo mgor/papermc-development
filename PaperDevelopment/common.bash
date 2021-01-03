@@ -53,7 +53,7 @@ EOF
     fi
 
     if [[ ! -d Paperclip/ ]]; then
-        git clone git@github.com:mgor/Paperclip.git || return $?
+        git clone https://github.com/mgor/Paperclip.git || return $?
     else
         pushd Paperclip/
         git stash
